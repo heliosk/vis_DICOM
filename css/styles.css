@@ -39,14 +39,14 @@ nav {
   margin: 10px;
   padding: 12px 14px;
   border-radius: 5px;
-  cursor: pointer;
   user-select: none;
   transition: all 150ms linear;
   text-align: center;
   text-decoration: none !important;
   text-transform: none; }
   .button:hover {
-    transition: all 150ms linear; }
+    transition: all 150ms linear;
+    cursor: pointer; }
   .button.blue {
     color: #fff;
     background-color: blue; }
@@ -55,7 +55,23 @@ nav {
 
 .dicom-container {
   display: flex;
+  flex-direction: column;
   width: 100vw;
   background-color: aquamarine;
   justify-content: center;
   align-items: center; }
+
+.dicom-visualizer {
+  width: 512px;
+  height: 512px;
+  display: inline-block;
+  border-style: solid;
+  border-color: black;
+  position: relative; }
+
+.dicom-image-area {
+  width: 512px;
+  height: 512px;
+  top: 0px;
+  left: 0px;
+  position: absolute; }
