@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <form id="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <input type="file" id="selectFile" >
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div style="width:512px;height:512px;position:relative;color: white;display:inline-block;border-style:solid;border-color:black;"
+                 oncontextmenu="return false"
+                 unselectable='on'
+                 onselectstart='return false;'
+                 onmousedown='return false;'>
+                <div id="dicomImage"
+                     style="width:512px;height:512px;top:0px;left:0px; position:absolute">
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+</body>
+<script src="https://unpkg.com/cornerstone-core/dist/cornerstone.min.js"></script>
+
+<script src="./libs/cornerStoneMath.min.js"></script>
+<script src="./libs/cornerStoneTools.min.js"></script>
+
+<script src="https://unpkg.com/dicom-parser@1.8.7/dist/dicomParser.min.js"></script>
+
+<script src="https://unpkg.com/cornerstone-wado-image-loader@3.1.2/dist/cornerstoneWADOImageLoader.min.js"></script>
+<script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+
+<script>
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        const files = evt.dataTransfer.files;
+
+        file = files[0];
+        const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+        loadAndViewImage(imageId);
+    }
+
+    function handleDragOver(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy';
+    }
+
+    const dropZone = document.getElementById('dicomImage');
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
+
+    let loaded = false;
+
+    function loadAndViewImage(imageId) {
+        const element = document.getElementById('dicomImage');
+        const start = new Date().getTime();
+        cornerstone.loadImage(imageId).then(function(image) {
+            
+            const viewport = cornerstone.getDefaultViewportForImage(element, image);
+
+            cornerstone.displayImage(element, image, viewport);
+            if(loaded === false) {
+                cornerstoneTools.mouseInput.enable(element);
+                cornerstoneTools.mouseWheelInput.enable(element);
+               
+                cornerstoneTools.zoom.activate(element, 4);
+                cornerstoneTools.zoomWheel.activate(element);
+
+                cornerstoneTools.imageStats.enable(element);
+                loaded = true;
+            }
+
+        }, function(err) {
+            alert(err);
+        });
+    }
+
+    const element = document.getElementById('dicomImage');
+    cornerstone.enable(element);
+
+    document.getElementById('selectFile').addEventListener('change', function(e) {
+       
+        const file = e.target.files[0];
+        const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+        loadAndViewImage(imageId);
+    });
+
+    document.getElementById('toggleCollapseInfo').addEventListener('click', function() {
+        if (document.getElementById('collapseInfo').style.display === 'none') {
+            document.getElementById('collapseInfo').style.display = 'block';
+        } else {
+            document.getElementById('collapseInfo').style.display = 'none';
+        }
+    });
+</script>
+</html>

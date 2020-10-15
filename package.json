@@ -1,0 +1,22 @@
+{
+  "name": "vis_dicom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scss": "node-sass --watch scss -o css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heliosk/vis_DICOM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heliosk/vis_DICOM/issues"
+  },
+  "homepage": "https://github.com/heliosk/vis_DICOM#readme",
+  "dependencies": {
+    "node-sass": "^4.14.1"
+  }
+}

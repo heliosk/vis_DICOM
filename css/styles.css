@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  margin: 0; }
+
+main {
+  display: flex;
+  height: 100%; }
+
+footer {
+  background: #26A69A;
+  height: 5vh; }
+
+header,
+footer,
+nav {
+  padding: 1em; }
+
+.menu {
+  flex: 1;
+  background: #FFAB00; }
+
+.menu-options {
+  flex: 1;
+  background-color: cornflowerblue; }
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 2px auto; }
+
+.button {
+  display: flex;
+  margin: 10px;
+  padding: 12px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 150ms linear;
+  text-align: center;
+  text-decoration: none !important;
+  text-transform: none; }
+  .button:hover {
+    transition: all 150ms linear; }
+  .button.blue {
+    color: #fff;
+    background-color: blue; }
+    .button.blue:hover {
+      background-color: #26A69A; }
+
+.dicom-container {
+  display: flex;
+  width: 100vw;
+  background-color: aquamarine;
+  justify-content: center;
+  align-items: center; }
