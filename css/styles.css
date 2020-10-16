@@ -6,58 +6,67 @@ body {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  margin: 0; }
+  margin: 0;
+  min-width: 640px;
+  font-family: 'Cabin', sans-serif; }
 
 main {
   display: flex;
   height: 100%; }
 
 footer {
-  background: #26A69A;
-  height: 5vh; }
-
-header,
-footer,
-nav {
-  padding: 1em; }
+  background: #434343;
+  color: #fff;
+  padding: 2px;
+  text-align: center; }
 
 .menu {
   flex: 1;
-  background: #FFAB00; }
-
-.menu-options {
-  flex: 1;
-  background-color: cornflowerblue; }
+  background-color: #434343; }
 
 .button-container {
   display: flex;
-  justify-content: flex-start;
-  margin: 2px auto; }
+  justify-content: flex-start; }
 
 .button {
-  display: flex;
-  margin: 10px;
-  padding: 12px 14px;
-  border-radius: 5px;
-  user-select: none;
   transition: all 150ms linear;
+  padding: 12px 14px;
+  min-width: 100px;
   text-align: center;
-  text-decoration: none !important;
+  user-select: none;
+  text-align: center;
   text-transform: none; }
   .button:hover {
     transition: all 150ms linear;
     cursor: pointer; }
   .button.blue {
     color: #fff;
-    background-color: blue; }
+    background: #243B55; }
     .button.blue:hover {
-      background-color: #26A69A; }
+      background-image: radial-gradient(circle at bottom center, #225b9c, #243B55 50%); }
+    .button.blue.active {
+      background: #225b9c; }
+
+.file-wrap #file-button {
+  padding: 10px;
+  color: white;
+  background: #243B55;
+  border: 1px solid #080808;
+  cursor: pointer;
+  transition: all 150ms linear; }
+
+.file-wrap #file-button:hover {
+  background-color: #225b9c; }
+
+.file-wrap #file-text {
+  margin-left: 10px;
+  color: #C9C9C9; }
 
 .dicom-container {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  background-color: aquamarine;
+  background-color: #272727;
   justify-content: center;
   align-items: center; }
 
@@ -66,8 +75,9 @@ nav {
   height: 512px;
   display: inline-block;
   border-style: solid;
-  border-color: black;
-  position: relative; }
+  border-color: #fff;
+  position: relative;
+  background-color: #080808; }
 
 .dicom-image-area {
   width: 512px;

@@ -1,3 +1,15 @@
+$color-white: #fff;
+$color-dark-blue: #243B55;
+$color-blue: #225b9c;
+$color-gray-light: #C9C9C9;
+$color-dark-gray: #434343;
+$color-black-light: #272727;
+$color-black: #080808;
+
+@mixin transition-1 {
+    transition: all 150ms linear;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -8,6 +20,8 @@ body {
     height: 100vh;
     width: 100vw;
     margin: 0;
+    min-width: 640px;
+    font-family: 'Cabin', sans-serif;
 }
   
 main {
@@ -16,57 +30,76 @@ main {
 }
 
 footer {
-    background: #26A69A;
-    height: 5vh;
-}
-  
-header,
-footer,
-nav {
-    padding: 1em;
+    background: $color-dark-gray;
+    color: $color-white;
+    padding: 2px;
+    text-align: center;
 }
 
 .menu {
     flex: 1;
-    background: #FFAB00;
-}
-
-.menu-options {
-    flex: 1;
-    background-color: cornflowerblue;
+    background-color: $color-dark-gray;
 }
 
 .button-container {
     display: flex;
     justify-content: flex-start;
-    margin: 2px auto;
 }
 
 .button {
-    display: flex;
-    margin: 10px;
+    @include transition-1();
     padding: 12px 14px;
-    border-radius: 5px;
-    
+    min-width: 100px;
+    text-align: center;
     
     user-select: none;
-    transition: all 150ms linear;
     text-align: center;
-    text-decoration: none !important;
     text-transform: none;
 
     &:hover {
-        transition: all 150ms linear;
+        @include transition-1();
         cursor: pointer;
     }
 
     &.blue {
-        color: #fff;
-        background-color: blue;
+        color: $color-white;
+        background: $color-dark-blue;
 
         &:hover {
-            background-color: #26A69A;
+            background-image:
+            radial-gradient(
+                circle at bottom center,
+                $color-blue,
+                $color-dark-blue 50%
+            );
         }
+
+        &.active {
+            background: $color-blue;
+        }
+    }
+}
+
+
+
+.file-wrap {
+
+    #file-button {
+        padding: 10px;
+        color: white;
+        background: $color-dark-blue;
+        border: 1px solid $color-black;
+        cursor: pointer;
+        @include transition-1();
+    }
+      
+    #file-button:hover {
+        background-color: $color-blue;
+    }
+      
+    #file-text {
+        margin-left: 10px;
+        color: $color-gray-light;
     }
 }
 
@@ -74,24 +107,25 @@ nav {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    background-color: aquamarine;
+    background-color: $color-black-light;
     justify-content: center;
     align-items: center;
 }
 
 .dicom-visualizer {
-    width:512px;
-    height:512px;
-    display:inline-block;
-    border-style:solid;
-    border-color:black;
+    width: 512px;
+    height: 512px;
+    display: inline-block;
+    border-style: solid;
+    border-color: $color-white;
     position: relative;
+    background-color: $color-black;
 }
 
 .dicom-image-area {
-    width:512px;
-    height:512px;
-    top:0px;
-    left:0px; 
-    position:absolute;
+    width: 512px;
+    height: 512px;
+    top: 0px;
+    left: 0px; 
+    position: absolute;
 }

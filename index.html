@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Visualizador::DICOM</title>
 </head>
 <body>
     <div class="menu">
         <div class="button-container">
-            <div class="button blue" onclick="handleFreehandRoi()">
-                FreeHandRoi
+            <div class="button blue" onclick="handleFreehandRoi(this)">
+                FreehandRoi
+            </div>
+            <div class="button blue" onclick="handleAngle(this)">
+                Angle
+            </div>
+            <div class="button blue" onclick="handleEraser(this)">
+                Eraser
             </div>
         </div>
     </div>
-    <div class="menu-options">options</div>
     <main>
         <div class="dicom-container">
-            <input type="file" id="selectFile" >
+            <div class="file-wrap">
+                <input type="file" id="real-file" hidden="hidden" />
+                <button type="button" id="file-button">ESCOLHER</button>
+                <span id="file-text">Selecione um arquivo ...</span>
+            <div>
             <br>
             <div class="dicom-visualizer"
                     oncontextmenu="return false"
@@ -28,7 +38,7 @@
             </div>
         </div>
     </main>
-    <footer>Footer</footer>
+    <footer>DICOM Visualizador &copy;2020</footer>
 </div>
 </body>
 <script src="https://unpkg.com/hammerjs@2.0.8/hammer.js"></script>
@@ -37,79 +47,5 @@
 <script src="https://unpkg.com/cornerstone-math"></script>
 <script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
 <script src="https://unpkg.com/cornerstone-tools"></script>
-<script>
-
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
-    cornerstoneTools.init({
-        showSVGCursors: true
-    });
- 
-    let loaded = false;
-    let freehandRoiEnabled = false;
-
-    const dropZone = document.getElementById('dicomImage');
-    dropZone.addEventListener('dragover', handleDragOver, false);
-    dropZone.addEventListener('drop', handleFileSelect, false);
-
-    const element = document.getElementById('dicomImage');
-    cornerstone.enable(element);
-
-    document.getElementById('selectFile').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
-        loadAndViewImage(imageId);
-    });
-
-
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        const files = evt.dataTransfer.files;
-        file = files[0];
-
-        const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
-        loadAndViewImage(imageId);
-    }
-
-    function handleDragOver(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy';
-    }
-
-    function loadAndViewImage(imageId) {
-
-        const element = document.getElementById('dicomImage');
-        
-        cornerstone.loadImage(imageId).then(function(image) {
-            
-            const viewport = cornerstone.getDefaultViewportForImage(element, image);
-
-            cornerstone.displayImage(element, image, viewport);
-            loaded = (!loaded) ? true : false;
-
-        }).catch(function(err) {
-            alert(err);
-        });
-    }
-
-    function handleFreehandRoi() {
-
-        const FreehandRoiTool = cornerstoneTools.FreehandRoiTool;
-
-        if((loaded) && (!freehandRoiEnabled)) {
-
-            cornerstoneTools.addTool(FreehandRoiTool)
-            cornerstoneTools.setToolActive('FreehandRoi', { mouseButtonMask: 1 });
-
-        } else {
-
-            cornerstoneTools.removeTool('FreehandRoi');
-        }
-
-        freehandRoiEnabled = !freehandRoiEnabled;
-    }
-
-</script>
+<script src="./script.js"></script>
 </html>
