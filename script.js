@@ -4,19 +4,13 @@ cornerstoneTools.init({
 });
 
 let loaded = false;
-let freehandRoiEnabled = false;
-let angleEnabled = false;
-let eraserEnabled = false;
+let series = [];
 
 const realFileButton = document.getElementById('real-file');
 const fileButton = document.getElementById('file-button');
 const fileText = document.getElementById('file-text');
-
-const dropZone = document.getElementById('dicomImage');
-dropZone.addEventListener('dragover', handleDragOver, false);
-dropZone.addEventListener('drop', handleFileSelect, false);
-
 const element = document.getElementById('dicomImage');
+
 cornerstone.enable(element);
 
 fileButton.addEventListener("click", function() {
@@ -32,38 +26,40 @@ realFileButton.addEventListener("change", function() {
 });
 
 document.getElementById('real-file').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
-    loadAndViewImage(imageId);
+    
+    if (e.target.files.length === 1) {
+        const file = e.target.files[0];
+
+        const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+        loadAndViewImage(imageId);
+
+    } else {
+
+        const files = e.target.files;
+
+        Array.from(files).forEach(file => {
+            let imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
+
+            series.push(imageId);
+            loadAndViewImage(imageId);
+        });
+    }
 });
-
-function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    const files = evt.dataTransfer.files;
-    file = files[0];
-
-    const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
-    loadAndViewImage(imageId);
-}
-
-function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy';
-}
 
 function loadAndViewImage(imageId) {
 
     const element = document.getElementById('dicomImage');
+    
+    // limpar canvas e adicionar novos elementos
+    cornerstone.disable(element);
+    cornerstone.enable(element);
 
     cornerstone.loadImage(imageId).then(function(image) {
 
         const viewport = cornerstone.getDefaultViewportForImage(element, image);
 
         cornerstone.displayImage(element, image, viewport);
-        loaded = (!loaded) ? true : false;
+        loaded = true;
 
     }).catch(function(err) {
         alert(err);
@@ -76,9 +72,8 @@ function handleFreehandRoi(element) {
 
     addActiveClass(element);
 
-    if ((loaded) && (!freehandRoiEnabled)) {
+    if (loaded) {
 
-        freehandRoiEnabled = true;
         cornerstoneTools.addTool(FreehandRoiTool)
         cornerstoneTools.setToolActive('FreehandRoi', {
             mouseButtonMask: 1
@@ -86,7 +81,6 @@ function handleFreehandRoi(element) {
 
     } else {
         cornerstoneTools.removeTool('FreehandRoi');
-        freehandRoiEnabled = false;
     }
 }
 
@@ -96,9 +90,8 @@ function handleAngle(element) {
 
     addActiveClass(element);
 
-    if ((loaded) && (!angleEnabled)) {
+    if (loaded) {
 
-        angleEnabled = true;
         cornerstoneTools.addTool(AngleTool)
         cornerstoneTools.setToolActive('Angle', {
             mouseButtonMask: 1
@@ -106,7 +99,6 @@ function handleAngle(element) {
 
     } else {
         cornerstoneTools.removeTool('Angle');
-        angleEnabled = false;
     }
 }
 
@@ -115,9 +107,8 @@ function handleEraser(element) {
 
     addActiveClass(element);
 
-    if ((loaded) && (!eraserEnabled)) {
+    if (loaded) {
 
-        eraserEnabled = true;
         cornerstoneTools.addTool(EraserTool)
         cornerstoneTools.setToolActive('Eraser', {
             mouseButtonMask: 1
@@ -125,8 +116,48 @@ function handleEraser(element) {
 
     } else {
         cornerstoneTools.removeTool('Eraser');
-        eraserEnabled = false;
     }
+}
+
+function handleProbe(element) {
+    const ProbeTool = cornerstoneTools.ProbeTool;
+
+    addActiveClass(element);
+
+    if (loaded) {
+
+        cornerstoneTools.addTool(ProbeTool)
+        cornerstoneTools.setToolActive('Probe', {
+            mouseButtonMask: 1
+        });
+
+    } else {
+        cornerstoneTools.removeTool('Probe');
+    }
+}
+
+function handleStackScrollMouseWheel(htmlElement) {
+    const element = document.getElementById('dicomImage');
+    const StackScrollMouseWheelTool = cornerstoneTools.StackScrollMouseWheelTool;
+
+    if (series.length < 1) {
+        alert('É necessário fazer upload de vários DICOM');
+        return false;
+    }
+
+    addActiveClass(htmlElement);
+
+    const imageIds = series.map(seriesImage => seriesImage);
+    const stack = {
+        currentImageIdIndex: 0,
+        imageIds
+    };
+        
+    cornerstoneTools.addStackStateManager(element, ['stack']);
+    cornerstoneTools.addToolState(element, 'stack', stack);
+    
+    cornerstoneTools.addTool(StackScrollMouseWheelTool);
+    cornerstoneTools.setToolActive('StackScrollMouseWheel', {});
 }
 
 function addActiveClass(element) {

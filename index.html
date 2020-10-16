@@ -16,6 +16,12 @@
             <div class="button blue" onclick="handleAngle(this)">
                 Angle
             </div>
+            <div class="button blue" onclick="handleProbe(this)">
+                Probe
+            </div>
+            <div class="button blue" onclick="handleStackScrollMouseWheel(this)">
+                StackScroll MouseWheel
+            </div>
             <div class="button blue" onclick="handleEraser(this)">
                 Eraser
             </div>
@@ -24,7 +30,7 @@
     <main>
         <div class="dicom-container">
             <div class="file-wrap">
-                <input type="file" id="real-file" hidden="hidden" />
+                <input type="file" id="real-file" multiple hidden="hidden" />
                 <button type="button" id="file-button">ESCOLHER</button>
                 <span id="file-text">Selecione um arquivo ...</span>
             <div>

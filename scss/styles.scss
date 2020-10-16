@@ -80,8 +80,6 @@ footer {
     }
 }
 
-
-
 .file-wrap {
 
     #file-button {
@@ -113,8 +111,8 @@ footer {
 }
 
 .dicom-visualizer {
-    width: 512px;
-    height: 512px;
+    width: 600px;
+    height: 600px;
     display: inline-block;
     border-style: solid;
     border-color: $color-white;
@@ -123,8 +121,8 @@ footer {
 }
 
 .dicom-image-area {
-    width: 512px;
-    height: 512px;
+    width: 600px;
+    height: 600px;
     top: 0px;
     left: 0px; 
     position: absolute;
