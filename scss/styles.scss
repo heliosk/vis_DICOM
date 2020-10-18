@@ -30,7 +30,7 @@ main {
 }
 
 footer {
-    background: $color-dark-gray;
+    background: $color-black;
     color: $color-white;
     padding: 2px;
     text-align: center;
@@ -38,12 +38,12 @@ footer {
 
 .menu {
     flex: 1;
-    background-color: $color-dark-gray;
+    background-color: $color-black-light;
 }
 
 .button-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .button {
