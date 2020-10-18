@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Visualizador::DICOM</title>
 </head>
 <body>
     <div class="menu">
+        <div class="toggle">
+            <div id="btn-toggle" class="button blue left" onclick="toggleMenuForMobile()">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
         <div class="button-container">
             <div class="button blue" onclick="handleFreehandRoi(this)">
                 FreehandRoi
@@ -38,7 +44,7 @@
             <div class="dicom-visualizer"
                     oncontextmenu="return false"
                     unselectable="on"
-                    onselectstart="return false;""
+                    onselectstart="return false;"
                     onmousedown="return false;">
                 <div id="dicomImage" class="dicom-image-area"></div>
             </div>

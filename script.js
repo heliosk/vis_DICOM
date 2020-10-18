@@ -169,3 +169,8 @@ function addActiveClass(element) {
 
     element.classList.add('active');
 }
+
+function toggleMenuForMobile() {
+    const btnContainer = document.querySelector('.button-container');
+    btnContainer.style.display = btnContainer.style.display === 'block' ? 'none' : 'block';
+}
